@@ -492,7 +492,6 @@ class Broker
         }
 
         $messages = [];
-
         foreach ($attendees as $attendee) {
             // An organizer can also be an attendee. We should not generate any
             // messages for those.
@@ -908,6 +907,9 @@ class Broker
                     $timezone = $vevent->{'RECURRENCE-ID'}->getDateTime()->getTimeZone();
                 }
             }
+
+            $instances[$recurId] = $vevent;
+
             if (isset($vevent->ATTENDEE)) {
                 foreach ($vevent->ATTENDEE as $attendee) {
                     if ($this->scheduleAgentServerRules
@@ -946,7 +948,6 @@ class Broker
                         ];
                     }
                 }
-                $instances[$recurId] = $vevent;
             }
 
             foreach ($this->significantChangeProperties as $prop) {
